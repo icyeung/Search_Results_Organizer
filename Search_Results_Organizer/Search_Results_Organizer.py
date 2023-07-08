@@ -19,7 +19,7 @@ searchTerm2DR = []
 unique1 = []
 unique2 = []
 
-with open(os.path.join(__location__, 'TesterFile.csv'), 'r', encoding = "utf8") as csvfile:
+with open(os.path.join(__location__, 'Factiva & ProQuest Comparison (4).csv'), 'r', encoding = "utf8") as csvfile:
     lines = csv.reader(csvfile, delimiter = ',')
     for row in lines:
         if not row[0] == "" and numofLines > 0:
@@ -34,21 +34,26 @@ with open(os.path.join(__location__, 'TesterFile.csv'), 'r', encoding = "utf8") 
 print("Number of Results for Search Term 1 Originally: ", len(searchTerm1))
 print("Number of Results for Search Term 2 Originally: ", len(searchTerm2))
 
+
+# Removes duplicates
 for result in searchTerm1:
     if result not in searchTerm1DR:
         searchTerm1DR.append(result)
 
-print(searchTerm1DR)
+# print(searchTerm1DR)
 
+# Removes duplicates
 for result in searchTerm2:
     if result not in searchTerm2DR:
         searchTerm2DR.append(result)
 
-print(searchTerm2DR)
+# print(searchTerm2DR)
 
 print("Number of Results for Search Term 1 After Duplicates Removed: ", len(searchTerm1DR))
 print("Number of Results for Search Term 2 After Duplicates Removed: ", len(searchTerm2DR))
 
+
+# Looks for matching results between two dearch terms
 for result2 in searchTerm2DR:
     if result2 not in searchTerm1DR:
         unique2.append(result2)
@@ -60,8 +65,8 @@ for result1 in searchTerm1DR:
         unique1.append(result1)
             
 
-searchFilteredDF = pd.DataFrame({'sea grant AND acifification (with quotations)': pd.Series(unique1), 'sea grant ocean acidification': pd.Series(unique2), 'Results in Common': pd.Series(commonResults)})
+searchFilteredDF = pd.DataFrame({'sea grant ocean acidification': pd.Series(unique1), 'sea grant coastal acidification': pd.Series(unique2), 'Results in Common': pd.Series(commonResults)})
 
-searchFilteredDF.to_excel("Test.xlsx", index=False)
+searchFilteredDF.to_excel("Comparison 4.xlsx", index=False)
 
 display(searchFilteredDF)
