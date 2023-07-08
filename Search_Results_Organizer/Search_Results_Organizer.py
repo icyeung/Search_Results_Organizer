@@ -16,6 +16,9 @@ commonResults = []
 searchTerm1DR = []
 searchTerm2DR = []
 
+unique1 = []
+unique2 = []
+
 with open(os.path.join(__location__, 'TesterFile.csv'), 'r', encoding = "utf8") as csvfile:
     lines = csv.reader(csvfile, delimiter = ',')
     for row in lines:
@@ -46,16 +49,18 @@ print(searchTerm2DR)
 print("Number of Results for Search Term 1 After Duplicates Removed: ", len(searchTerm1DR))
 print("Number of Results for Search Term 2 After Duplicates Removed: ", len(searchTerm2DR))
 
+for result2 in searchTerm2DR:
+    if result2 not in searchTerm1DR:
+        unique2.append(result2)
+    else:
+        commonResults.append(result2)
+
 for result1 in searchTerm1DR:
-    for result2 in searchTerm2DR:
-        if result1 == result2:
-            print(result1)
-            commonResults.append(result1)
-            searchTerm2DR.remove(result1)
-            searchTerm1DR.remove(result1)
+    if result1 not in commonResults:
+        unique1.append(result1)
             
 
-searchFilteredDF = pd.DataFrame({'sea grant AND acifification (with quotations)': pd.Series(searchTerm1DR), 'sea grant ocean acidification': pd.Series(searchTerm2DR), 'Results in Common': pd.Series(commonResults)})
+searchFilteredDF = pd.DataFrame({'sea grant AND acifification (with quotations)': pd.Series(unique1), 'sea grant ocean acidification': pd.Series(unique2), 'Results in Common': pd.Series(commonResults)})
 
 searchFilteredDF.to_excel("Test.xlsx", index=False)
 
