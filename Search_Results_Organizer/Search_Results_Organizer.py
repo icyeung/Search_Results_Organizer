@@ -1,8 +1,9 @@
 import os
 import csv
 import pandas as pd
+from IPython.display import display
 
-__location__ = os.path.realpath(os.join(os.getcwd(), os.path.dirname(__file__)))
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
 numofLines = 0
@@ -10,9 +11,8 @@ numofLines = 0
 searchTerm1 = []
 searchTerm2 = []
 
-searchFilteredDF = pd.DataFrame()
-
-with open(os.path.join(__location__, 'Factiva & ProQuest Comparison (1)'), 'r') as csvfile:
+with open(os.path.join(__location__, 'Factiva & ProQuest Comparison (1).csv'), 'r', errors='ignore') as csvfile:
+    #file = open(csvfile, encoding="utf8")
     lines = csv.reader(csvfile, delimiter = ',')
     for row in lines:
         if not row[0] == "" and numofLines > 0:
@@ -28,8 +28,10 @@ for result2 in searchTerm2:
     for result1 in searchTerm1:
         if result1 == result2:
             searchTerm2.remove(result1)
+            searchTerm1.remove(result1)
 
-searchFilteredDF['sea grant AND acidification'] = searchTerm1
-searchFilteredDF['sea grant ocean acidification'] = searchTerm2
+searchFilteredDF = pd.DataFrame({'sea grant AND acifification (with quotations)': pd.Series(searchTerm1), 'sea grant ocean acidification': pd.Series(searchTerm2)})
+
+searchFilteredDF.to_excel("Test.xlsx", index=False)
 
 display(searchFilteredDF)
