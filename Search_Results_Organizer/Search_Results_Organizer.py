@@ -23,7 +23,7 @@ unique1 = []
 unique2 = []
 
 
-with open(os.path.join(__location__, 'Factiva & ProQuest Comparison (4).csv'), 'r', encoding = "utf8") as csvfile:
+with open(os.path.join(__location__, 'Factiva & ProQuest Comparison (1).csv'), 'r', encoding = "utf8") as csvfile:
     lines = csv.reader(csvfile, delimiter = ',')
 
     # Gets rid of empty cells within column lists
@@ -74,6 +74,6 @@ for result1 in searchTerm1DR:
 searchFilteredDF = pd.DataFrame({'sea grant ocean acidification': pd.Series(unique1), 'sea grant coastal acidification': pd.Series(unique2), 'Results in Common': pd.Series(commonResults)})
 
 # Saves dataframe as an excel with specified name "Comparison __.xlsx"
-searchFilteredDF.to_excel("Comparison 4.xlsx", index=False)
+searchFilteredDF.to_excel("Comparison 1.xlsx", index=False)
 
 display(searchFilteredDF)
